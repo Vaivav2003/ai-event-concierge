@@ -1,4 +1,4 @@
-# 🎯 AI Event Concierge
+# 🎯 VenueAI
 
 > An AI-powered platform to plan corporate events using natural language. Describe your event, get a structured venue proposal instantly — powered by Google Gemini and LangGraph.
 
