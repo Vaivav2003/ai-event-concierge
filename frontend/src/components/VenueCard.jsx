@@ -1,106 +1,214 @@
+// const VenueCard = ({ data }) => {
+//   if (!data) return null;
+
+//   const formatCurrency = (amount) => {
+//     return new Intl.NumberFormat("en-US", {
+//       style: "currency",
+//       currency: "USD",
+//       maximumFractionDigits: 0,
+//     }).format(amount);
+//   };
+
+//   const formatDate = (dateStr) => {
+//     if (!dateStr) return "";
+//     return new Date(dateStr).toLocaleDateString("en-US", {
+//       month: "short", day: "numeric", year: "numeric",
+//       hour: "2-digit", minute: "2-digit",
+//     });
+//   };
+
+//   return (
+//     <div style={{ backgroundColor: "#ffffff", borderRadius: "16px", border: "2px solid #dbeafe", boxShadow: "0 4px 12px rgba(37,99,235,0.08)", overflow: "hidden" }}>
+
+//       {/* Header */}
+//       <div style={{ background: "linear-gradient(135deg, #1d4ed8, #2563eb)", padding: "24px" }}>
+//         <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start", gap: "16px" }}>
+//           <div>
+//             <p style={{ color: "#bfdbfe", fontSize: "11px", fontWeight: "600", textTransform: "uppercase", letterSpacing: "0.1em", margin: "0 0 4px" }}>
+//               AI Venue Proposal
+//             </p>
+//             <h2 style={{ color: "#ffffff", fontSize: "24px", fontWeight: "800", margin: "0 0 4px", lineHeight: 1.2 }}>
+//               {data.venue_name}
+//             </h2>
+//             <p style={{ color: "#bfdbfe", fontSize: "14px", margin: 0 }}>
+//               📍 {data.location}
+//             </p>
+//           </div>
+//           <div style={{ textAlign: "right", flexShrink: 0 }}>
+//             <p style={{ color: "#bfdbfe", fontSize: "11px", textTransform: "uppercase", letterSpacing: "0.05em", margin: "0 0 2px" }}>
+//               Estimated Cost
+//             </p>
+//             <p style={{ color: "#ffffff", fontSize: "26px", fontWeight: "800", margin: "0 0 2px" }}>
+//               {formatCurrency(data.estimated_cost_usd)}
+//             </p>
+//             <p style={{ color: "#bfdbfe", fontSize: "12px", margin: 0 }}>
+//               Capacity: {data.capacity} people
+//             </p>
+//           </div>
+//         </div>
+//       </div>
+
+//       {/* Body */}
+//       <div style={{ padding: "24px", display: "flex", flexDirection: "column", gap: "20px" }}>
+
+//         {/* Why it fits */}
+//         <div>
+//           <h3 style={{ fontSize: "11px", fontWeight: "700", color: "#9ca3af", textTransform: "uppercase", letterSpacing: "0.1em", margin: "0 0 8px" }}>
+//             Why It Fits
+//           </h3>
+//           <p style={{ fontSize: "14px", color: "#374151", lineHeight: "1.7", backgroundColor: "#eff6ff", borderRadius: "10px", padding: "12px 16px", border: "1px solid #dbeafe", margin: 0 }}>
+//             {data.why_it_fits}
+//           </p>
+//         </div>
+
+//         {/* Amenities */}
+//         {data.amenities && data.amenities.length > 0 && (
+//           <div>
+//             <h3 style={{ fontSize: "11px", fontWeight: "700", color: "#9ca3af", textTransform: "uppercase", letterSpacing: "0.1em", margin: "0 0 8px" }}>
+//               Amenities
+//             </h3>
+//             <div style={{ display: "flex", flexWrap: "wrap", gap: "8px" }}>
+//               {data.amenities.map((amenity, i) => (
+//                 <span key={i} style={{
+//                   padding: "6px 12px",
+//                   backgroundColor: "#f3f4f6",
+//                   color: "#374151",
+//                   fontSize: "12px",
+//                   fontWeight: "500",
+//                   borderRadius: "999px",
+//                   border: "1px solid #e5e7eb"
+//                 }}>
+//                   ✓ {amenity}
+//                 </span>
+//               ))}
+//             </div>
+//           </div>
+//         )}
+
+//         {/* Original Query */}
+//         <div>
+//           <h3 style={{ fontSize: "11px", fontWeight: "700", color: "#9ca3af", textTransform: "uppercase", letterSpacing: "0.1em", margin: "0 0 6px" }}>
+//             Your Request
+//           </h3>
+//           <p style={{ fontSize: "13px", color: "#9ca3af", fontStyle: "italic", margin: 0 }}>
+//             "{data.user_query}"
+//           </p>
+//         </div>
+
+//         {/* Timestamp */}
+//         {data.created_at && (
+//           <p style={{ fontSize: "12px", color: "#d1d5db", textAlign: "right", borderTop: "1px solid #f3f4f6", paddingTop: "12px", margin: 0 }}>
+//             Generated on {formatDate(data.created_at)}
+//           </p>
+//         )}
+//       </div>
+//     </div>
+//   );
+// };
+
+// export default VenueCard;
+
+
 const VenueCard = ({ data }) => {
   if (!data) return null;
 
-  const formatCurrency = (amount) => {
-    return new Intl.NumberFormat("en-US", {
-      style: "currency",
-      currency: "USD",
-      maximumFractionDigits: 0,
-    }).format(amount);
-  };
+  const fmt = (n) => new Intl.NumberFormat("en-US", {
+    style: "currency", currency: "USD", maximumFractionDigits: 0
+  }).format(n);
 
-  const formatDate = (dateStr) => {
-    if (!dateStr) return "";
-    return new Date(dateStr).toLocaleDateString("en-US", {
-      month: "short", day: "numeric", year: "numeric",
-      hour: "2-digit", minute: "2-digit",
-    });
-  };
+  const fmtDate = (d) => d ? new Date(d).toLocaleDateString("en-US", {
+    month: "short", day: "numeric", year: "numeric"
+  }) : "";
 
   return (
-    <div style={{ backgroundColor: "#ffffff", borderRadius: "16px", border: "2px solid #dbeafe", boxShadow: "0 4px 12px rgba(37,99,235,0.08)", overflow: "hidden" }}>
-
+    <div className="fade-up" style={{ animation: "fadeUp 0.6s ease forwards" }}>
       {/* Header */}
-      <div style={{ background: "linear-gradient(135deg, #1d4ed8, #2563eb)", padding: "24px" }}>
+      <div style={{
+        borderRadius: "20px 20px 0 0",
+        padding: "28px 28px 24px",
+        background: "linear-gradient(135deg, rgba(59,130,246,0.15), rgba(99,102,241,0.1))",
+        border: "1px solid rgba(99,179,237,0.15)",
+        borderBottom: "none",
+      }}>
         <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start", gap: "16px" }}>
           <div>
-            <p style={{ color: "#bfdbfe", fontSize: "11px", fontWeight: "600", textTransform: "uppercase", letterSpacing: "0.1em", margin: "0 0 4px" }}>
-              AI Venue Proposal
+            <p style={{ fontSize: "10px", letterSpacing: "0.15em", color: "rgba(99,179,237,0.7)", textTransform: "uppercase", marginBottom: "8px" }}>
+              ✦ AI Venue Proposal
             </p>
-            <h2 style={{ color: "#ffffff", fontSize: "24px", fontWeight: "800", margin: "0 0 4px", lineHeight: 1.2 }}>
+            <h2 style={{ fontFamily: "'Instrument Serif', serif", fontSize: "28px", fontWeight: 400, color: "#ffffff", lineHeight: 1.2, marginBottom: "6px" }}>
               {data.venue_name}
             </h2>
-            <p style={{ color: "#bfdbfe", fontSize: "14px", margin: 0 }}>
+            <p style={{ fontSize: "14px", color: "rgba(255,255,255,0.5)" }}>
               📍 {data.location}
             </p>
           </div>
           <div style={{ textAlign: "right", flexShrink: 0 }}>
-            <p style={{ color: "#bfdbfe", fontSize: "11px", textTransform: "uppercase", letterSpacing: "0.05em", margin: "0 0 2px" }}>
-              Estimated Cost
+            <p style={{ fontSize: "10px", letterSpacing: "0.1em", color: "rgba(255,255,255,0.35)", textTransform: "uppercase", marginBottom: "4px" }}>
+              Estimated
             </p>
-            <p style={{ color: "#ffffff", fontSize: "26px", fontWeight: "800", margin: "0 0 2px" }}>
-              {formatCurrency(data.estimated_cost_usd)}
+            <p style={{ fontFamily: "'Instrument Serif', serif", fontSize: "28px", color: "#ffffff" }}>
+              {fmt(data.estimated_cost_usd)}
             </p>
-            <p style={{ color: "#bfdbfe", fontSize: "12px", margin: 0 }}>
-              Capacity: {data.capacity} people
+            <p style={{ fontSize: "12px", color: "rgba(255,255,255,0.35)", marginTop: "2px" }}>
+              {data.capacity} guests
             </p>
           </div>
         </div>
       </div>
 
       {/* Body */}
-      <div style={{ padding: "24px", display: "flex", flexDirection: "column", gap: "20px" }}>
-
+      <div style={{
+        borderRadius: "0 0 20px 20px",
+        padding: "24px 28px 28px",
+        background: "rgba(255,255,255,0.02)",
+        border: "1px solid rgba(99,179,237,0.1)",
+        borderTop: "none",
+        display: "flex", flexDirection: "column", gap: "20px",
+      }}>
         {/* Why it fits */}
         <div>
-          <h3 style={{ fontSize: "11px", fontWeight: "700", color: "#9ca3af", textTransform: "uppercase", letterSpacing: "0.1em", margin: "0 0 8px" }}>
-            Why It Fits
-          </h3>
-          <p style={{ fontSize: "14px", color: "#374151", lineHeight: "1.7", backgroundColor: "#eff6ff", borderRadius: "10px", padding: "12px 16px", border: "1px solid #dbeafe", margin: 0 }}>
+          <p style={{ fontSize: "10px", letterSpacing: "0.12em", color: "rgba(255,255,255,0.3)", textTransform: "uppercase", marginBottom: "10px" }}>
+            Why it fits
+          </p>
+          <p style={{ fontSize: "14px", color: "rgba(255,255,255,0.7)", lineHeight: "1.75", padding: "14px 16px", background: "rgba(255,255,255,0.03)", borderRadius: "12px", borderLeft: "2px solid rgba(99,179,237,0.3)" }}>
             {data.why_it_fits}
           </p>
         </div>
 
         {/* Amenities */}
-        {data.amenities && data.amenities.length > 0 && (
+        {data.amenities?.length > 0 && (
           <div>
-            <h3 style={{ fontSize: "11px", fontWeight: "700", color: "#9ca3af", textTransform: "uppercase", letterSpacing: "0.1em", margin: "0 0 8px" }}>
+            <p style={{ fontSize: "10px", letterSpacing: "0.12em", color: "rgba(255,255,255,0.3)", textTransform: "uppercase", marginBottom: "10px" }}>
               Amenities
-            </h3>
+            </p>
             <div style={{ display: "flex", flexWrap: "wrap", gap: "8px" }}>
-              {data.amenities.map((amenity, i) => (
+              {data.amenities.map((a, i) => (
                 <span key={i} style={{
                   padding: "6px 12px",
-                  backgroundColor: "#f3f4f6",
-                  color: "#374151",
-                  fontSize: "12px",
-                  fontWeight: "500",
+                  background: "rgba(255,255,255,0.04)",
+                  border: "1px solid rgba(255,255,255,0.08)",
                   borderRadius: "999px",
-                  border: "1px solid #e5e7eb"
+                  fontSize: "12px",
+                  color: "rgba(255,255,255,0.6)",
                 }}>
-                  ✓ {amenity}
+                  ✓ {a}
                 </span>
               ))}
             </div>
           </div>
         )}
 
-        {/* Original Query */}
-        <div>
-          <h3 style={{ fontSize: "11px", fontWeight: "700", color: "#9ca3af", textTransform: "uppercase", letterSpacing: "0.1em", margin: "0 0 6px" }}>
-            Your Request
-          </h3>
-          <p style={{ fontSize: "13px", color: "#9ca3af", fontStyle: "italic", margin: 0 }}>
-            "{data.user_query}"
+        {/* Footer */}
+        <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", paddingTop: "12px", borderTop: "1px solid rgba(255,255,255,0.05)" }}>
+          <p style={{ fontSize: "12px", color: "rgba(255,255,255,0.2)", fontStyle: "italic" }}>
+            "{data.user_query?.slice(0, 60)}{data.user_query?.length > 60 ? "..." : ""}"
           </p>
+          {data.created_at && (
+            <p style={{ fontSize: "11px", color: "rgba(255,255,255,0.2)" }}>
+              {fmtDate(data.created_at)}
+            </p>
+          )}
         </div>
-
-        {/* Timestamp */}
-        {data.created_at && (
-          <p style={{ fontSize: "12px", color: "#d1d5db", textAlign: "right", borderTop: "1px solid #f3f4f6", paddingTop: "12px", margin: 0 }}>
-            Generated on {formatDate(data.created_at)}
-          </p>
-        )}
       </div>
     </div>
   );
